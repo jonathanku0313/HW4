@@ -56,14 +56,12 @@ for i in range(0, 25):
     if i > 5:
         line=s.readline()
         r[i-5] = float(line)
-        print(r[i-5])
         line=s.readline() 
         x[i-5] = 1000*float(line)
         line=s.readline()  
         y[i-5] = 1000*float(line)
         line=s.readline() 
         z[i-5] = 1000*float(line)
-        print(z[i-5])
         line=s.readline() 
         mqttc.publish(topic, line)
 
