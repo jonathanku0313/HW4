@@ -10,7 +10,7 @@ topic= "Mbed"
 port = 1883
 
 t = np.arange(0,18,1)
-tilt = np.arange(0,18,1)
+r = np.arange(0,18,1)
 i = 0
 
 # Callbacks
@@ -22,7 +22,7 @@ def on_message(mosq, obj, msg):
     print("[Received] Topic: " + msg.topic + ", Message: " + str(msg.payload) + "\n")
     print(float(msg.payload))
     print(i)
-    tilt[i] = float(msg.payload)
+    r[i] = float(msg.payload)
     i += 1
 
 def on_subscribe(mosq, obj, mid, granted_qos):
@@ -46,9 +46,10 @@ while True:
     mqttc.loop()
     if i >= 18:
         plt.figure()
-        plt.stem(t,tilt)
-        plt.xlabel('Time')
-        plt.ylabel('Tilt')
+        plt.plot(t,r)
+        plt.xlabel('timestamp')
+        plt.ylabel('number')
+        plt.title("# collected data plot")
         plt.show()
         break
 

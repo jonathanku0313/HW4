@@ -31,10 +31,10 @@ mqttc.on_subscribe = on_subscribe
 mqttc.on_unsubscribe = on_unsubscribe    
 
 t = np.arange(0,20,1)
-r = np.arange(0,20,1)
 x = np.arange(0,20,1)
 y = np.arange(0,20,1)
 z = np.arange(0,20,1)
+tilt = np.arange(0,20,1)
 
 # XBee setting
 
@@ -55,7 +55,7 @@ for i in range(0, 25):
     
     if i > 5:
         line=s.readline()
-        r[i-5] = float(line)
+        mqttc.publish(topic, line)
         line=s.readline() 
         x[i-5] = 1000*float(line)
         line=s.readline()  
@@ -63,13 +63,13 @@ for i in range(0, 25):
         line=s.readline() 
         z[i-5] = 1000*float(line)
         line=s.readline() 
-        mqttc.publish(topic, line)
+        tilt[i-5] = float(line)
+        
 
 fig, ax = plt.subplots(2, 1)
-ax[0].plot(t,r)
-ax[0].set_xlabel('timestamp')
-ax[0].set_ylabel('number')
-ax[0].set_title("# collected data plot")
+ax[0].stem(t,tilt)
+ax[0].set_xlabel('Time')
+ax[0].set_ylabel('Tilt')
 ax[1].plot(t,x/1000)
 ax[1].plot(t,y/1000)
 ax[1].plot(t,z/1000)
